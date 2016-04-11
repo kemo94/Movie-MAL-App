@@ -3,6 +3,7 @@ package com.example.kemos.moviemalapp.Controller;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,7 +34,6 @@ public class MovieFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieItemArray = new ArrayList<MovieItem>();
-
         setHasOptionsMenu(true);
     }
 
@@ -61,34 +61,48 @@ public class MovieFragment extends Fragment {
            final Intent intent = new Intent(getActivity(), DetailActivity.class);
            gridview = (GridView) rootView.findViewById(R.id.grid);
            gridview.setAdapter( new CustomGridAdapter(getActivity(),movieItemArray));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (  movieItemArray.size() == 0 && movieTask.getMovieDataArray() != null )
+                          movieItemArray = movieTask.getMovieDataArray();
+                    if (secondaryFragment != null) {
+                        secondaryFragment.setMovieItem(movieItemArray.get(position));
+                        getActivity().setTitle(movieItemArray.get(position).getTitle() + " ("
+                                + movieItemArray.get(position).getDate().substring(0, 4) + ")");
+                    }
+                     else {
+                        intent.putExtra("title", movieItemArray.get(position).getTitle());
+                        intent.putExtra("rate", movieItemArray.get(position).getRate());
+                        intent.putExtra("poster", movieItemArray.get(position).getPosterURL());
+                        intent.putExtra("id", movieItemArray.get(position).getMovieId());
+                        intent.putExtra("date", movieItemArray.get(position).getDate().substring(0, 4));
+                        intent.putExtra("overview", movieItemArray.get(position).getOverview());
+                        startActivity(intent);
+                    }
+             }
 
-                movieItemArray = movieTask.getMovieDataArray();
-
-                if ( secondaryFragment != null) {
-                    secondaryFragment.setMovieItem(movieItemArray.get(position));
-                    getActivity().setTitle(movieItemArray.get(position).getTitle());
-                }
-                else{
-                    intent.putExtra("title", movieItemArray.get(position).getTitle());
-                    intent.putExtra("rate", movieItemArray.get(position).getRate());
-                    intent.putExtra("poster", movieItemArray.get(position).getPosterURL());
-                    intent.putExtra("id", movieItemArray.get(position).getMovieId());
-                    intent.putExtra("date", movieItemArray.get(position).getDate().substring(0, 4));
-                    intent.putExtra("overview", movieItemArray.get(position).getOverview());
-                    startActivity(intent);
-                }
-            }
 
         });
         updateMovies();
 
         return rootView;
     }
+    public  void delay(){
 
+        int secondsDelayed = 5;
+        new Handler().postDelayed(new Runnable() {
+        public void run() {
+            movieItemArray = movieTask.getMovieDataArray();
+            if (secondaryFragment != null) {
+                secondaryFragment.setMovieItem(movieItemArray.get(0));
+                getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
+                        + movieItemArray.get(0).getDate().substring(0, 4) + ")");
+            }
+          }
+        }, secondsDelayed * 1000);
+
+    }
     public  void updateMovies(){
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -99,8 +113,10 @@ public class MovieFragment extends Fragment {
         else
             MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/top_rated?";
 
-         movieTask = new FetchMovieTask(getActivity() , MOVIE_BASE_URL , "movie data"  , gridview);
+         movieTask = new FetchMovieTask(getActivity() , MOVIE_BASE_URL , "movie_data"  , gridview);
          movieTask.execute("");
+
+         delay();
     }
 
     public void setSecondaryFragment(ISecondaryFragment secondaryFragment) {
@@ -110,9 +126,8 @@ public class MovieFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateMovies();
 
+       updateMovies();
     }
-
 
 }

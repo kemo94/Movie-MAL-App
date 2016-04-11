@@ -65,15 +65,15 @@ public class DetailFragment extends Fragment implements ISecondaryFragment{
     }
 
 
-    public void updateMovies() {
+    public void getTrailersAndReviews() {
 
         String MOVIE_TRAILER_URL = "http://api.themoviedb.org/3/movie/" + movieItem.getMovieId() + "/videos?";
-        movieTrailersTask = new FetchMovieTask(getActivity() , MOVIE_TRAILER_URL , "movie trailer"  , trailersList);
+        movieTrailersTask = new FetchMovieTask(getActivity() , MOVIE_TRAILER_URL , "movie_trailer"  , trailersList);
         movieTrailersTask.execute("");
 
 
         String MOVIE_REVIEWS_URL = "http://api.themoviedb.org/3/movie/" + movieItem.getMovieId() + "/reviews?";
-        movieReviewsTask = new FetchMovieTask(getActivity() , MOVIE_REVIEWS_URL , "movie review"  , reviewsList);
+        movieReviewsTask = new FetchMovieTask(getActivity() , MOVIE_REVIEWS_URL , "movie_review"  , reviewsList);
         movieReviewsTask.execute("");
 
     }
@@ -145,15 +145,13 @@ public class DetailFragment extends Fragment implements ISecondaryFragment{
                 addWatchList();
             }
         });
-        DecimalFormat df = new DecimalFormat("#.##");
-
         ratingValue = Float.parseFloat(movieItem.getRate());
         ratingValue /= 2 ;
         rating.setRating(ratingValue);
 
-        rate.setText("Rate : " + df.format(ratingValue) + "/5");
+        rate.setText("Rate : " + new DecimalFormat("#.##").format(ratingValue) + "/5");
         String poster = movieItem.getPosterURL();
-        String URL = "https://image.tmdb.org/t/p/original" + poster;
+        String URL = "http://image.tmdb.org/t/p/w185" + poster;
 
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
@@ -185,6 +183,6 @@ public class DetailFragment extends Fragment implements ISecondaryFragment{
     public void setMovieItem(MovieItem movieItem) {
         this.movieItem = movieItem ;
         setMovieDataOnView();
-        updateMovies();
+        getTrailersAndReviews();
     }
 }

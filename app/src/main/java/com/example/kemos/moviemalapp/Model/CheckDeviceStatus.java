@@ -1,6 +1,7 @@
 package com.example.kemos.moviemalapp.Model;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 
 
@@ -10,9 +11,16 @@ import android.net.ConnectivityManager;
 public abstract  class CheckDeviceStatus {
     public static boolean isNetworkAvailable(Context context){
 
-         ConnectivityManager connectivityManager = ((ConnectivityManager)  context.getSystemService(
+        ConnectivityManager connectivityManager = ((ConnectivityManager)  context.getSystemService(
                 Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo()!= null && connectivityManager.getActiveNetworkInfo().isConnected();
 
     }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
 }

@@ -34,6 +34,12 @@ public class WatchListActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    /*
+    if(getSupportFragmentManager().findFragmentById(R.id.movie_details_container) != null) {
+        getSupportFragmentManager()
+                .beginTransaction().
+                remove(getSupportFragmentManager().findFragmentById(R.id.movie_details_container)).commit();
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

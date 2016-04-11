@@ -66,8 +66,7 @@
                 android:layout_gravity="bottom"
                 android:clickable="false"
                 android:isIndicator="true"
-                android:numStars="5"
-                android:rating="2.5"  />
+                android:numStars="5"   />
 
             <RelativeLayout
                 android:layout_width="match_parent"

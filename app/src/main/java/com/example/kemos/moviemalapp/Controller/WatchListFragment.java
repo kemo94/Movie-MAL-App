@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 
 public class WatchListFragment extends Fragment {
-
+    ArrayList<MovieItem> movieItemArray;
     private MovieOperations movieDBOperation;
     ISecondaryFragment secondaryFragment ;
     @Override
@@ -43,7 +43,7 @@ public class WatchListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
-        final ArrayList<MovieItem> movieItemArray = movieDBOperation.getWatchList();
+        movieItemArray = movieDBOperation.getWatchList();
         final Intent intent = new Intent(getActivity(), DetailActivity.class);
         GridView gridview = (GridView) rootView.findViewById(R.id.grid);
         gridview.setAdapter(new CustomGridAdapter(getActivity(), movieItemArray));
@@ -51,8 +51,12 @@ public class WatchListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if ( secondaryFragment != null)
+                if ( secondaryFragment != null) {
                     secondaryFragment.setMovieItem(movieItemArray.get(position));
+                    getActivity().setTitle(movieItemArray.get(position).getTitle() + " ("
+                                + movieItemArray.get(position).getDate().substring(0,4) + ")");
+
+                }
                 else{
                     intent.putExtra("title", movieItemArray.get(position).getTitle());
                     intent.putExtra("rate", movieItemArray.get(position).getRate());
@@ -69,6 +73,12 @@ public class WatchListFragment extends Fragment {
 
     public void setSecondaryFragment(ISecondaryFragment secondaryFragment) {
         this.secondaryFragment = secondaryFragment;
+
+        if ( secondaryFragment != null) {
+            secondaryFragment.setMovieItem(movieItemArray.get(0));
+            getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
+                    + movieItemArray.get(0).getDate().substring(0,4) + ")");
+        }
     }
     @Override
     public void onStart() {

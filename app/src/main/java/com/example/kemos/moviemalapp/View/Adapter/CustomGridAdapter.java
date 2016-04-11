@@ -32,7 +32,7 @@ public class CustomGridAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.grid_cell, null);
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.poster);
-        String url =  "https://image.tmdb.org/t/p/original"+ movieItemArray.get(position).getPosterURL();
+        String url =  "http://image.tmdb.org/t/p/w185"+ movieItemArray.get(position).getPosterURL();
 
         int screenHeight = context.getResources().getDisplayMetrics().heightPixels;
         int screenWidth = context.getResources().getDisplayMetrics().widthPixels;

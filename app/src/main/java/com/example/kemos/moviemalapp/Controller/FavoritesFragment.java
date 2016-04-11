@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment {
 
+    ArrayList<MovieItem> movieItemArray;
     private MovieOperations movieDBOperation;
     ISecondaryFragment secondaryFragment ;
     @Override
@@ -41,8 +42,9 @@ public class FavoritesFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        final ArrayList<MovieItem> movieItemArray = movieDBOperation.getFavoritesMovies();
+        movieItemArray = movieDBOperation.getFavoritesMovies();
         final Intent intent = new Intent(getActivity(), DetailActivity.class);
+
         GridView gridview = (GridView) rootView.findViewById(R.id.grid);
         gridview.setAdapter(new CustomGridAdapter(getActivity(), movieItemArray));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,7 +53,8 @@ public class FavoritesFragment extends Fragment {
 
                 if ( secondaryFragment != null) {
                     secondaryFragment.setMovieItem(movieItemArray.get(position));
-                    getActivity().setTitle(movieItemArray.get(position).getTitle());
+                    getActivity().setTitle(movieItemArray.get(position).getTitle() + " ("
+                            + movieItemArray.get(position).getDate().substring(0,4) + ")");
                 }
                 else{
                     intent.putExtra("title", movieItemArray.get(position).getTitle());
@@ -69,6 +72,11 @@ public class FavoritesFragment extends Fragment {
 
     public void setSecondaryFragment(ISecondaryFragment secondaryFragment) {
         this.secondaryFragment = secondaryFragment;
+        if ( secondaryFragment != null) {
+            secondaryFragment.setMovieItem(movieItemArray.get(0));
+            getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
+                    + movieItemArray.get(0).getDate().substring(0,4) + ")");
+        }
     }
     @Override
     public void onStart() {

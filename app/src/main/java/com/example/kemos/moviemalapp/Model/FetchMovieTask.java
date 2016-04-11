@@ -35,6 +35,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
     GridView gridview;
     ArrayList<MovieItem> movieDataArray;
     ListView listView ;
+   // View rootView ;
     public FetchMovieTask(Context c, String url, String targetData, ListView listView){
         this.url = url;
         this.context = c ;
@@ -204,9 +205,9 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
         }
 
         try {
-            if ( targetData.equals("movie data"))
+            if ( targetData.equals("movie_data") )
                 return getMovieDataFromJson(dataJsonStr );
-            else if ( targetData.equals("movie trailer") )
+            else if ( targetData.equals("movie_trailer") )
                 return getMovieTrailerFromJson(dataJsonStr );
             else
                 return getMovieReviewsFromJson(dataJsonStr );
@@ -226,12 +227,11 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
                Log.v(LOG_TAG, "Forecast entry: " + result.get(i).getPosterURL());
 
 
-           if (targetData.equals("movie data"))
+           if (targetData.equals("movie_data"))
                gridview.setAdapter(new CustomGridAdapter(context, movieDataArray));
-
-           else if (targetData.equals("movie trailer"))
+           else if (targetData.equals("movie_trailer"))
                listView.setAdapter(new CustomTrailerListAdapter(context, movieDataArray));
-           else
+           else if (targetData.equals("movie_review"))
                listView.setAdapter(new CustomReviewListAdapter(context, movieDataArray));
        }
 

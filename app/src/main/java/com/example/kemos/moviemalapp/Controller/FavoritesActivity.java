@@ -17,6 +17,7 @@ public class FavoritesActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (CheckDeviceStatus.isNetworkAvailable(this) ){
+
             if (savedInstanceState == null){
 
                 setContentView(R.layout.activity_favorites);

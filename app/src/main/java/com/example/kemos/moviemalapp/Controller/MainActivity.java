@@ -16,15 +16,16 @@ public class MainActivity extends ActionBarActivity {
          super.onCreate(savedInstanceState);
         if (CheckDeviceStatus.isNetworkAvailable(this) ){
              if (savedInstanceState == null){
+                 setContentView(R.layout.activity_main);
+            MovieFragment movieFragment = (MovieFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                  DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                  movieFragment.setSecondaryFragment(detailFragment);
 
-                setContentView(R.layout.activity_main);
-                MovieFragment movieFragment = (MovieFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                movieFragment.setSecondaryFragment(detailFragment);
+
              }
         }
         else
-            Toast.makeText(this,"No internet connection , please connect !!" , Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No internet connection , please connect !!", Toast.LENGTH_LONG).show();
 
     }
 
