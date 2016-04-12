@@ -28,7 +28,7 @@ public class MovieFragment extends Fragment {
     GridView gridview;
     ArrayList<MovieItem> movieItemArray ;
     FetchMovieTask movieTask;
-
+    boolean chosed = false ;
     ISecondaryFragment secondaryFragment ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,11 @@ public class MovieFragment extends Fragment {
            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                chosed = true ;
                     if (  movieItemArray.size() == 0 && movieTask.getMovieDataArray() != null )
                           movieItemArray = movieTask.getMovieDataArray();
-                    if (secondaryFragment != null) {
+                if (secondaryFragment != null && movieItemArray.size() != 0 ) {
+
                         secondaryFragment.setMovieItem(movieItemArray.get(position));
                         getActivity().setTitle(movieItemArray.get(position).getTitle() + " ("
                                 + movieItemArray.get(position).getDate().substring(0, 4) + ")");
@@ -94,7 +96,7 @@ public class MovieFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
         public void run() {
             movieItemArray = movieTask.getMovieDataArray();
-            if (secondaryFragment != null) {
+            if (secondaryFragment != null && movieItemArray.size() != 0 && !chosed) {
                 secondaryFragment.setMovieItem(movieItemArray.get(0));
                 getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
                         + movieItemArray.get(0).getDate().substring(0, 4) + ")");
