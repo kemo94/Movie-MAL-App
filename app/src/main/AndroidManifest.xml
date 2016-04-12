@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kemos.moviemalapp" >
+    package="com.example.kemos.fainalmoviemalapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,12 +20,12 @@
         <activity
             android:name=".Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-        <intent-filter>
+            <intent-filter>
 
 
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -34,7 +34,7 @@
             android:label="@string/title_activity_detail" >
         </activity>
         <activity
-            android:name="com.example.kemos.moviemalapp.Controller.SettingsActivity"
+            android:name="com.example.kemos.fainalmoviemalapp.Controller.SettingsActivity"
             android:label="Settings Activity" >
         </activity>
         <activity

@@ -1,5 +1,5 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/movie_detail"
-    android:name="com.example.kemos.moviemalapp.Controller.DetailFragment"
+    android:name="com.example.kemos.fainalmoviemalapp.Controller.DetailFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
