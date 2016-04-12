@@ -74,7 +74,7 @@ public class WatchListFragment extends Fragment {
     public void setSecondaryFragment(ISecondaryFragment secondaryFragment) {
         this.secondaryFragment = secondaryFragment;
 
-        if ( secondaryFragment != null) {
+        if ( secondaryFragment != null && movieItemArray.size() != 0 ) {
             secondaryFragment.setMovieItem(movieItemArray.get(0));
             getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
                     + movieItemArray.get(0).getDate().substring(0,4) + ")");

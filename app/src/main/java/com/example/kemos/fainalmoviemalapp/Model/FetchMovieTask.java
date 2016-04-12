@@ -152,6 +152,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
 
         String dataJsonStr = null;
 
+        String APIKey = "42ff4803b000d60162080246b4f305ec";
 
         final String APIKey_PARAM = "api_key";
         try {
