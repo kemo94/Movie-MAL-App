@@ -90,7 +90,7 @@ public class MovieFragment extends Fragment {
     }
     public  void delay(){
 
-        int secondsDelayed = 4;
+        int secondsDelayed = 5;
         new Handler().postDelayed(new Runnable() {
         public void run() {
             movieItemArray = movieTask.getMovieDataArray();
