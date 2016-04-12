@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.kemos.fainalmoviemalapp.Model.MovieItem;
 import com.example.kemos.fainalmoviemalapp.Model.MovieOperations;
@@ -44,7 +45,10 @@ public class FavoritesFragment extends Fragment {
 
         movieItemArray = movieDBOperation.getFavoritesMovies();
         final Intent intent = new Intent(getActivity(), DetailActivity.class);
-
+        if ( movieItemArray.size() == 0 ){
+            Toast.makeText(getActivity() , "No favorites movies , please choose some movies !",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(),MainActivity.class));
+        }
         GridView gridview = (GridView) rootView.findViewById(R.id.grid);
         gridview.setAdapter(new CustomGridAdapter(getActivity(), movieItemArray));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,11 +76,13 @@ public class FavoritesFragment extends Fragment {
 
     public void setSecondaryFragment(ISecondaryFragment secondaryFragment) {
         this.secondaryFragment = secondaryFragment;
+
         if ( secondaryFragment != null && movieItemArray.size() != 0 ) {
             secondaryFragment.setMovieItem(movieItemArray.get(0));
             getActivity().setTitle(movieItemArray.get(0).getTitle() + " ("
                     + movieItemArray.get(0).getDate().substring(0,4) + ")");
         }
+
     }
     @Override
     public void onStart() {
