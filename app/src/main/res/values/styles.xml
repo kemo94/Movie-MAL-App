@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+ <resources>
+        <style name="AppTheme" parent="Theme.AppCompat.Light">
+            <item name="colorPrimary">#ff2c0f79</item>
+         <!--   <item name="colorPrimaryDark">#ff23c4cc</item>
+            <item name="colorAccent">#ff009acc</item>
+            <style name="CustomTheme" parent="android:Theme.Light">
+        <item name="android:windowBackground">@color/custom_theme_color</item>
+        <item name="android:colorBackground">@color/custom_theme_color</item>
+    </style>-->
+
+            <item name="android:windowBackground">@color/custom_theme_color</item>
+        </style>
+
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar</item>
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">22dip</item>
+    </style>
+  </resources>
