@@ -13,26 +13,29 @@ import android.widget.Toast;
 import com.example.kemos.fainalmoviemalapp.Model.CheckDeviceStatus;
 import com.example.kemos.fainalmoviemalapp.R;
 
-
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by kemos on 4/14/2016.
+ */
+public class SearchResultsActivity extends AppCompatActivity {
+    String query;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        handleIntent(getIntent());
         if (CheckDeviceStatus.isNetworkAvailable(this) ){
 
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_search);
             onRetainNonConfigurationInstance();
             if (savedInstanceState == null){
-                 MovieFragment movieFragment =(MovieFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                 DetailFragment detailFragment =(DetailFragment)  getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                 movieFragment.setSecondaryFragment(detailFragment);
+                SearchFragment searchFragment =(SearchFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                DetailFragment detailFragment =(DetailFragment)  getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                searchFragment.setSecondaryFragment(detailFragment);
+                searchFragment.setQuery(query);
 
-             }
+            }
         }
         else
             Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -76,4 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+         handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+             query = intent.getStringExtra(SearchManager.QUERY);
+        }
+    }
 }

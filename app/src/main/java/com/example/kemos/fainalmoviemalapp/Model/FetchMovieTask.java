@@ -34,6 +34,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
     String targetData ;
     Context context ;
     GridView gridview;
+    boolean searchResult = true ;
     ArrayList<MovieItem> movieDataArray;
     ListView listView ;
     final  String MOVIE_DATA = "movie_data";
@@ -111,9 +112,14 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
         final String TMD_ID = "id";
         final String TMD_RATE = "vote_average";
         final String TMD_DATE = "release_date";
+        final String TMD_TOTAL_RESULT = "total_results";
+
 
         JSONObject forecastJson = new JSONObject(dataJsonStr);
         JSONArray moviesArray = forecastJson.getJSONArray(TMD_LIST);
+         if  (forecastJson.getInt(TMD_TOTAL_RESULT) == 0 )
+             searchResult = false ;
+
         movieDataArray = new  ArrayList<MovieItem> ();
         for(int i = 0; i < moviesArray.length(); i++) {
 
@@ -142,7 +148,10 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
         return movieDataArray;
 
     }
+    public boolean checkSearchResult(){
 
+        return searchResult;
+    }
     @Override
     protected ArrayList<MovieItem> doInBackground(String... params) {
 
@@ -155,6 +164,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
 
         String dataJsonStr = null;
 
+        String APIKey = "42ff4803b000d60162080246b4f305ec";
 
         final String APIKey_PARAM = "api_key";
         try {
