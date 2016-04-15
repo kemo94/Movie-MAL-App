@@ -18,23 +18,26 @@ public class WatchListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (CheckDeviceStatus.isNetworkAvailable(this) ){
-            setContentView(R.layout.activity_watch_list);
-            onRetainNonConfigurationInstance();
-            if ( !checkWatchList()){
-                Toast.makeText(this , R.string.no_watch_list,Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this,MainActivity.class));
-            }
+        if (savedInstanceState != null)
+            setContentView(R.layout.activity_search);
+        else {
+            if (CheckDeviceStatus.isNetworkAvailable(this)) {
+                setContentView(R.layout.activity_watch_list);
+                onRetainNonConfigurationInstance();
+                if (!checkWatchList()) {
+                    Toast.makeText(this, R.string.no_watch_list, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, MainActivity.class));
+                }
 
-            if (savedInstanceState == null){
+                if (savedInstanceState == null) {
 
-                WatchListFragment watchListFragment = (WatchListFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                watchListFragment.setSecondaryFragment(detailFragment);
-            }
+                    WatchListFragment watchListFragment = (WatchListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                    DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                    watchListFragment.setSecondaryFragment(detailFragment);
+                }
+            } else
+                Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(this, R.string.no_connection , Toast.LENGTH_LONG).show();
     }
 
     boolean checkWatchList(){

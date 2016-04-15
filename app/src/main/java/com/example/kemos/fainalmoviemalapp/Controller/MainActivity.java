@@ -18,21 +18,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
-
-        if (CheckDeviceStatus.isNetworkAvailable(this) ){
-
+        if ( savedInstanceState != null )
             setContentView(R.layout.activity_main);
-            onRetainNonConfigurationInstance();
-            if (savedInstanceState == null){
-                 MovieFragment movieFragment =(MovieFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                 DetailFragment detailFragment =(DetailFragment)  getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                 movieFragment.setSecondaryFragment(detailFragment);
+        else{
+            if (CheckDeviceStatus.isNetworkAvailable(this)) {
 
-             }
+                setContentView(R.layout.activity_main);
+                onRetainNonConfigurationInstance();
+                if (savedInstanceState == null) {
+                    MovieFragment movieFragment = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                    DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                    movieFragment.setSecondaryFragment(detailFragment);
+
+                }
+            } else
+                Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
-
     }
 
     @Override

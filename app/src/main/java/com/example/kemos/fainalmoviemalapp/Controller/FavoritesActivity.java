@@ -19,22 +19,25 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (CheckDeviceStatus.isNetworkAvailable(this) ){
+        if ( savedInstanceState != null )
             setContentView(R.layout.activity_favorites);
-            onRetainNonConfigurationInstance();
-            if ( !checkFavoritesMovies()){
-                Toast.makeText(this , R.string.no_favorites,Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this,MainActivity.class));
-            }
+        else {
+            if (CheckDeviceStatus.isNetworkAvailable(this)) {
+                setContentView(R.layout.activity_favorites);
+                onRetainNonConfigurationInstance();
+                if (!checkFavoritesMovies()) {
+                    Toast.makeText(this, R.string.no_favorites, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, MainActivity.class));
+                }
 
-            if (savedInstanceState == null){
-                FavoritesFragment movieFragment = (FavoritesFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                movieFragment.setSecondaryFragment(detailFragment);
-            }
+                if (savedInstanceState == null) {
+                    FavoritesFragment movieFragment = (FavoritesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                    DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                    movieFragment.setSecondaryFragment(detailFragment);
+                }
+            } else
+                Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(this, R.string.no_connection , Toast.LENGTH_LONG).show();
     }
 
     boolean checkFavoritesMovies(){

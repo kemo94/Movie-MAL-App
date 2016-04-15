@@ -22,20 +22,25 @@ public class SearchResultsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleIntent(getIntent());
-        if (CheckDeviceStatus.isNetworkAvailable(this) ){
-
+        if (savedInstanceState != null)
             setContentView(R.layout.activity_search);
-            onRetainNonConfigurationInstance();
-            if (savedInstanceState == null){
-                SearchFragment searchFragment =(SearchFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-                DetailFragment detailFragment =(DetailFragment)  getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
-                searchFragment.setSecondaryFragment(detailFragment);
-                searchFragment.setQuery(query);
+        else {
+            if (CheckDeviceStatus.isNetworkAvailable(this)) {
 
+                setContentView(R.layout.activity_search);
+                onRetainNonConfigurationInstance();
+                if (savedInstanceState == null) {
+                    SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+                    DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_container);
+                    searchFragment.setSecondaryFragment(detailFragment);
+                    searchFragment.setQuery(query);
+
+                }
             }
+            else
+                Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
+
     }
 
     @Override
