@@ -11,122 +11,143 @@
     android:layout_alignParentStart="true" >
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context="com.example.kemos.fainalmoviemalapp.Controller.DetailActivity">
-
-    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.example.kemos.fainalmoviemalapp.Controller.DetailActivity">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:id="@+id/poster"
-            android:scaleType="fitXY"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+        <RelativeLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="5">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/poster"
-            android:layout_centerHorizontal="true"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/poster"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true" />
 
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/poster"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp">
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rate"
+                        android:text="Rating: "
+                        android:fontFamily="sans-serif-black-capital-caps"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:editable="false" />
+
+                    <!-- android:progressDrawable="@drawable/ratingbar"
+                     style="@style/foodRatingBar"
+                       -->
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/foodRatingBar"
+                        android:id="@+id/ratingBar"
+                        android:layout_gravity="bottom"
+                        android:clickable="false"
+                        android:isIndicator="true"
+                        android:numStars="5"   />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp" >
+
+                        <ImageButton android:id="@+id/addFavorite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star"
+                            android:background="#00ffffff"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"/>
+
+                        <ImageButton android:id="@+id/addWatchList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/no_watch"
+                            android:background="#00ffffff"
+                            android:layout_alignParentTop="true"
+                            android:layout_toRightOf="@+id/addFavorite"
+                            android:layout_toEndOf="@+id/addFavorite" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="4">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Overview"
+                android:id="@+id/textView"
+                android:textStyle="bold"
+                android:textSize="30dp"  />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rate"
-                android:text="Rating: "
-                android:fontFamily="sans-serif-black-capital-caps"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:editable="false" />
-
-            <!-- android:progressDrawable="@drawable/ratingbar"
-             style="@style/foodRatingBar"
-               -->
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/foodRatingBar"
-                android:id="@+id/ratingBar"
-                android:layout_gravity="bottom"
-                android:clickable="false"
-                android:isIndicator="true"
-                android:numStars="5"   />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp" >
-
-            <ImageButton android:id="@+id/addFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/star"
-                android:background="#00ffffff"
+                android:id="@+id/overview"
+                android:layout_below="@+id/textView"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
-
-          <ImageButton android:id="@+id/addWatchList"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/no_watch"
-              android:background="#00ffffff"
-              android:layout_alignParentTop="true"
-              android:layout_toRightOf="@+id/addFavorite"
-              android:layout_toEndOf="@+id/addFavorite" />
-
-          </RelativeLayout>
-
-
-</LinearLayout>
-       </LinearLayout>
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp">
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Overview"
-        android:fontFamily="sans-serif-black-small-caps"
-        android:id="@+id/textView"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:editable="false"  />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-             android:id="@+id/overview"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
-
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
 
         <RelativeLayout
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:paddingTop="16dp">
+            android:layout_weight="3">
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Similar Movies"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:editable="false"
+                    android:id="@+id/textView4" />
+
+            <fragment
+                android:name="com.example.kemos.fainalmoviemalapp.Controller.SimilarMoviesFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/similar_movie_container"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="3">
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -135,37 +156,39 @@
                 android:textSize="30dp"
                 android:editable="false"
                 android:id="@+id/textView2" />
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/trailerList"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+
+            <fragment
+                android:name="com.example.kemos.fainalmoviemalapp.Controller.TrailersMovieFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/trailer_movie_container"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
 
-
         <RelativeLayout
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp">
+            android:layout_weight="3">
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Reviews"
                 android:textStyle="bold"
                 android:textSize="30dp"
-                android:editable="false"
                 android:id="@+id/textView3" />
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reviewList"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
+            <fragment
+                android:name="com.example.kemos.fainalmoviemalapp.Controller.ReviewMovieFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_movie_container"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
+
     </LinearLayout>
 
 </ScrollView>

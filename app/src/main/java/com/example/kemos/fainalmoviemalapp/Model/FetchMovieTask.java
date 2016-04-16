@@ -3,6 +3,7 @@ package com.example.kemos.fainalmoviemalapp.Model;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import com.example.kemos.fainalmoviemalapp.View.Adapter.CustomGridAdapter;
 import com.example.kemos.fainalmoviemalapp.View.Adapter.CustomReviewListAdapter;
 import com.example.kemos.fainalmoviemalapp.View.Adapter.CustomTrailerListAdapter;
+import com.example.kemos.fainalmoviemalapp.View.Adapter.RecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +39,19 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
     boolean searchResult = true ;
     ArrayList<MovieItem> movieDataArray;
     ListView listView ;
+    RecyclerView recyclerView ;
     final  String MOVIE_DATA = "movie_data";
     final  String MOVIE_TRAILER = "movie_trailer";
+    final  String SIMILAR_MOVIES = "SIMILAR_MOVIES";
     final  String MOVIE_REVIEW = "movie_review";
+
+    public FetchMovieTask(Context c, String url, String targetData, RecyclerView recyclerView){
+        this.url = url;
+        this.context = c ;
+        this.targetData = targetData;
+        this.recyclerView = recyclerView ;
+    }
+
     public FetchMovieTask(Context c, String url, String targetData, ListView listView){
         this.url = url;
         this.context = c ;
@@ -80,7 +92,6 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
         }
         return movieDataArray ;
     }
-
     public ArrayList<MovieItem> getMovieReviewsFromJson(String reviewJsonStr  )
             throws JSONException {
 
@@ -217,13 +228,12 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
         }
 
         try {
-            if ( targetData.equals(MOVIE_DATA) )
+            if ( targetData.equals(MOVIE_DATA) || targetData.equals(SIMILAR_MOVIES) )
                 return getMovieDataFromJson(dataJsonStr );
             else if ( targetData.equals(MOVIE_TRAILER) )
                 return getMovieTrailerFromJson(dataJsonStr );
             else if ( targetData.equals(MOVIE_REVIEW) )
                 return getMovieReviewsFromJson(dataJsonStr );
-
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -236,7 +246,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
     protected void onPostExecute(ArrayList<MovieItem> result) {
        if ( result != null ) {
            for (int i = 0; i < result.size(); i++)
-               Log.v(LOG_TAG, "Forecast entry: " + result.get(i).getPosterURL());
+               Log.v(LOG_TAG, "Forecast entry: " + result.get(i).getTitle());
 
            if (targetData.equals(MOVIE_DATA))
                gridview.setAdapter(new CustomGridAdapter(context, movieDataArray));
@@ -244,6 +254,9 @@ public class FetchMovieTask extends AsyncTask<String, Void, ArrayList<MovieItem>
                listView.setAdapter(new CustomTrailerListAdapter(context, movieDataArray));
            else if (targetData.equals(MOVIE_REVIEW))
                listView.setAdapter(new CustomReviewListAdapter(context, movieDataArray));
+            else if (targetData.equals(SIMILAR_MOVIES))
+               recyclerView.setAdapter(new RecyclerViewAdapter(context, movieDataArray));
+
        }
 
     }

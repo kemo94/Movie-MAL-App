@@ -1,22 +1,15 @@
 package com.example.kemos.fainalmoviemalapp.Controller;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kemos.fainalmoviemalapp.Model.CheckDeviceStatus;
-import com.example.kemos.fainalmoviemalapp.Model.FetchMovieTask;
 import com.example.kemos.fainalmoviemalapp.Model.MovieItem;
 import com.example.kemos.fainalmoviemalapp.Model.MovieOperations;
 import com.example.kemos.fainalmoviemalapp.R;
@@ -24,22 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 
 public class DetailFragment extends Fragment implements ISecondaryFragment {
 
-    final  String MOVIE_TRAILER = "movie_trailer";
-    final  String MOVIE_REVIEW = "movie_review";
     private MovieOperations movieDBOperation;
-    ListView trailersList;
-    ListView reviewsList;
     ImageView moviePoster ;
     TextView overView;
     TextView rate;
-    ArrayList<MovieItem> movieTrailersArray;
-    FetchMovieTask movieTrailersTask ;
-    FetchMovieTask movieReviewsTask ;
     RatingBar rating;
     MovieItem movieItem ;
     Float ratingValue;
@@ -71,14 +56,19 @@ public class DetailFragment extends Fragment implements ISecondaryFragment {
 
     public void getTrailersAndReviews() {
 
-        String MOVIE_TRAILER_URL = "http://api.themoviedb.org/3/movie/" + movieItem.getMovieId() + "/videos?";
-        movieTrailersTask = new FetchMovieTask(getActivity() , MOVIE_TRAILER_URL , MOVIE_TRAILER  , trailersList);
-        movieTrailersTask.execute("");
+        SimilarMoviesFragment similarMoviesFragment =  (SimilarMoviesFragment)
+                getChildFragmentManager().findFragmentById(R.id.similar_movie_container);
+        similarMoviesFragment.populatRecyclerView(movieItem.getMovieId());
+
+        ReviewMovieFragment overviewMovieFragment =  (ReviewMovieFragment)
+                getChildFragmentManager().findFragmentById(R.id.review_movie_container);
+        overviewMovieFragment.populatListView(movieItem.getMovieId());
+
+        TrailersMovieFragment trailersMovieFragment =  (TrailersMovieFragment)
+                getChildFragmentManager().findFragmentById(R.id.trailer_movie_container);
+        trailersMovieFragment.populatListView(movieItem.getMovieId());
 
 
-        String MOVIE_REVIEWS_URL = "http://api.themoviedb.org/3/movie/" + movieItem.getMovieId() + "/reviews?";
-        movieReviewsTask = new FetchMovieTask(getActivity() , MOVIE_REVIEWS_URL , MOVIE_REVIEW  , reviewsList);
-        movieReviewsTask.execute("");
 
     }
 
@@ -102,8 +92,6 @@ public class DetailFragment extends Fragment implements ISecondaryFragment {
 
     public View setView(View rootView){
 
-        trailersList = (ListView) rootView.findViewById(R.id.trailerList);
-        reviewsList = (ListView) rootView.findViewById(R.id.reviewList);
         btnAddFavorite = (ImageButton) rootView.findViewById(R.id.addFavorite);
         btnAddWatchList =  (ImageButton) rootView.findViewById(R.id.addWatchList);
         moviePoster = (ImageView) rootView.findViewById(R.id.poster);
@@ -111,19 +99,6 @@ public class DetailFragment extends Fragment implements ISecondaryFragment {
         overView = (TextView) rootView.findViewById(R.id.overview);
         rate = (TextView) rootView.findViewById(R.id.rate);
 
-        trailersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                movieTrailersArray = movieTrailersTask.getMovieDataArray();
-               if (CheckDeviceStatus.isNetworkAvailable(getActivity())) {
-                   Intent intent = new Intent(Intent.ACTION_VIEW,
-                           Uri.parse("http://www.youtube.com/watch?v=" + movieTrailersArray.get(position).getTrailerId()));
-                   startActivity(intent);
-               }
-                else
-                Toast.makeText(getActivity(), R.string.no_connection, Toast.LENGTH_LONG).show();
-            }
-        });
         if ( movieItem != null )
             setMovieDataOnView();
         return rootView ;

@@ -6,5 +6,4 @@ import android.widget.TextView;
 public class ViewHolder {
   TextView title;
   ImageView poster;
-  int position;
 }
